@@ -40,9 +40,16 @@ defmodule Hotel.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:gettext, "~> 0.11"},
+      {:gettext, "~> 0.16.1"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:absinthe_ecto, "~> 0.1.0"},
+      {:absinthe_plug, "~> 1.4.0"},
+      {:ex_machina, "~> 2.2", only: [:dev, :test]},
+      {:bcrypt_elixir, "~> 0.12"},
+      {:comeonin, "~> 4.0"},
+      {:guardian, git: "https://github.com/LittleKidogo/guardian.git"},
+      {:distillery, "~> 2.0.12"}
     ]
   end
 
