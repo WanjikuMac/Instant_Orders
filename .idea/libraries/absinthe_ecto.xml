@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="absinthe_ecto" type="mix">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/absinthe_ecto/lib" />
+      <root url="file://$PROJECT_DIR$/deps/absinthe_ecto/priv" />
+    </SOURCES>
+  </library>
+</component>

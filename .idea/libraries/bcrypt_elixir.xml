@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="bcrypt_elixir" type="mix">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/bcrypt_elixir/lib" />
+      <root url="file://$PROJECT_DIR$/deps/bcrypt_elixir/c_src" />
+    </SOURCES>
+  </library>
+</component>

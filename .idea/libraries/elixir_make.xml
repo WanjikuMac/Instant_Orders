@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="elixir_make" type="mix">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/elixir_make/lib" />
+    </SOURCES>
+  </library>
+</component>

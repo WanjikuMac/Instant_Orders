@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="guardian" type="mix">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/guardian/lib" />
+    </SOURCES>
+  </library>
+</component>
