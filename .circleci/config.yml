@@ -2,59 +2,63 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version here
-      - image: circleci/elixir:1.4
+      - image: littlekidogo/alpine-elixir-phoenix
         environment:
+          working_directory: /home/circleci/project
           MIX_ENV: test
 
     steps:
       - checkout
-      - restore_chache: #restores saved mix cache
-        keys: #list of cache keys, in decreasing specificity
-          - v1-mix-cache-{{ .Branch }}-{{ checcksum "mix.lock"}}
-          - v1-mix-cache-{{ .Branch }}
-          - v1-mix-cache
+      - run: mix local.hex --force  # install Hex locally (without prompt)
+      - run: mix local.rebar --force  # fetch a copy of rebar (without prompt)
+      - restore_cache: #restores saved mix cache
+          keys: #list of cache keys, in decreasing specificity
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock"}}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
       - restore_cache: #restores saved build cache
-        keys:
-          - v1-build-cache-{{ .Branch }}
-          - v1-build-cache
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
       - run:
-        name: Get Dependencies
-        command: mix deps.get
+          name: Get Dependencies
+          command: mix deps.get
       - run:
-        name: compile
-        command: mix compile
+          name: compile
+          command: mix compile
       - save_cache: #generate and store cache so `restore_cache` works
-        key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-        paths: "deps"
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
       - save_cache: #make another less specific cache
-        key: v1-mix-cache-{{ .Branch }}
-        paths: "deps"
+          key: v1-mix-cache-{{ .Branch }}
+          paths: "deps"
       - save_cache: #you should really save one or more cache just in case
-        key: v1-mix-cache
-        paths: "deps"
+          key: v1-mix-cache
+          paths: "deps"
       - save_cache: #don't forget to save a *build* cache too
-        key: v1-build-cache-{{ .Branch }}
-        paths: "_build"
+          key: v1-build-cache-{{ .Branch }}
+          paths: "_build"
       - save_cache: #and one more build cache for good measure
-        key: v1-build-cache
-        paths: "_build"
+          key: v1-build-cache
+          paths: "_build"
+      - run: pwd && ls
       - persist_to_workspace:
-        root: /opt/app
-        paths:
-          - project
-    test:
-      docker:
-        - image: circleci/postgres:10.1-alpine
-          environment:
-            MIX_ENV: test
-        - image: postgres: latest
-          environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
+          root: /opt/app
+          paths:
+            - project
+
+  test:
+    docker:
+      - image: littlekidogo/phoenix-deploy
+        environment:
+          MIX_ENV: test
+      - image: postgres:latest
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
     steps:
       - attach_workspace:
-          at: opt/app
+          at: /opt/app
 
       - run:
           name: Install dockerize
@@ -66,12 +70,22 @@ jobs:
       - run: #specialutility that stalls main process until DB is ready
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
+      - run: pwd && ls
       - run:
           name: Run Tests
-          command: MIX_ENV=test mix test;
+          command: MIX_ENV=test mix test
 
       - persist_to_workspace:
-          root: opt/app
+          root: /opt/app
           paths:
             - project
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+    
