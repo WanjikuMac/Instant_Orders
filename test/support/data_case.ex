@@ -22,6 +22,7 @@ defmodule Hotel.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Hotel.DataCase
+      import Hotel.Factory
     end
   end
 
