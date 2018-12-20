@@ -1,3 +1,7 @@
+.idea/
+*.iml
+.DS_Store
+test/.DS_Store
 # The directory Mix will write compiled artifacts to.
 /_build/
 
