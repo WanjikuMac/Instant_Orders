@@ -11,16 +11,31 @@ defmodule HotelWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug(HotelWeb.Context)
   end
 
   scope "/", HotelWeb do
+    #use the default browser stack
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", HotelWeb do
-  #   pipe_through :api
-  # end
+   scope "/", HotelWeb do
+    pipe_through :api
+
+    forward(
+      "/api", Absinthe.Plug,
+      schema: HotelWeb.Schema,
+      socket: HotelWeb.UserSocket
+    )
+
+    forward(
+      "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: HotelWeb.Schema,
+      socket: HotelWeb.UserSocket,
+      interface: :playground
+    )
+   end
 end
