@@ -3,7 +3,7 @@ defmodule Hotel.Auth.Guardian do
     Authentication serializer and parse for guardian
   """
 
-  use Guardian, otp_app: :Hotel
+  use Guardian, otp_app: :hotel
 
   alias Hotel.{
       Accounts,

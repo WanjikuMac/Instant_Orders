@@ -21,7 +21,7 @@ defmodule HotelWeb.ApiCase do
     quote do
       #import conveniences for testing with connections
       use Phoenix.ConnTest
-      import Hotel.Router.Helpers
+      import HotelWeb.Router.Helpers
       alias Hotel.Repo
 
       import Ecto
@@ -58,9 +58,9 @@ defmodule HotelWeb.ApiCase do
   end
 
   #add information to connection
-  @spec add_authentication_headers(Plug.Conn.t(),String.t()) :: {Plug.Conn.t(), any()}
+  @spec add_authentication_headers(Plug.Conn.t(), String.t()) :: {Plug.Conn.t(), any()}
   defp add_authentication_headers(conn, _any) do
-    user =insert(:user)
+    user = insert(:user)
 
     conn = conn |> Hotel.AuthenticationTestHelpers.authenticate(user)
 

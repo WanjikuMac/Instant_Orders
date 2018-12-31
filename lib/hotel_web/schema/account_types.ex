@@ -23,7 +23,7 @@ defmodule HotelWeb.Schema.AccountTypes do
   end
 
   @desc "A mutation to support building a session once a user signs in"
-  field :sign_in, :user do
+  field :sign_in, :session do
     arg(:input, non_null(:session_input))
     resolve(&Accounts.sign_in/3)
   end
@@ -51,7 +51,7 @@ defmodule HotelWeb.Schema.AccountTypes do
 
   @desc "input object for a session"
   input_object :session_input do
-    field(:sign_in_params, non_null(:string))
+    field(:sign_in_param, non_null(:string))
     field(:password, non_null(:string))
   end
 end
