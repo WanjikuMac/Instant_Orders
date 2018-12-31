@@ -22,7 +22,7 @@ defmodule HotelWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-   scope "/", HotelWeb do
+   scope "/" do
     pipe_through :api
 
     forward(

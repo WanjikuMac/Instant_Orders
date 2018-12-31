@@ -14,7 +14,7 @@ defmodule HotelWeb.Resolvers.AccountsTest do
 
       variables = %{
         "input" => %{
-          "sign_in_params" => user.username,
+          "sign_in_param" => user.username,
           "password" => "hash"
         }
       }
@@ -35,6 +35,7 @@ defmodule HotelWeb.Resolvers.AccountsTest do
 
       %{
         "data" => %{
+
           "sign_in" => result
         }
       } = json_response(res, 200)

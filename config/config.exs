@@ -22,6 +22,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Guardian setup
+config :hotel, Hotel.Auth.Guardian,
+ issuer: "hotel",
+ secret_key: "2ILgMXYucWz7GNwNQx5pv1APppnY6IDexC9D6g87NbPUNLD8SSTGPUBTV0QDDxtp"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
