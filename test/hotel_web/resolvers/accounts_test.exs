@@ -143,5 +143,24 @@ defmodule HotelWeb.Resolvers.AccountsTest do
       assert Repo.aggregate(User, :count, :id) == 1
       assert new_user["username"] == variables["input"]["username"]
     end
+
+    test "returns an error when no users are in the database", %{conn: conn} do
+      assert Repo.aggregate(User, :count, :id) == 0
+
+      query = """
+      {
+        Users {
+          username
+          id
+        }
+      }
+      """
+
+      res = post(conn, "api/graphiql", query: query)
+
+      %{
+        "errors" => [_result|_]
+      } =json_response(res, 200)
+    end
   end
 end
