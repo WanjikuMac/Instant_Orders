@@ -162,5 +162,37 @@ defmodule HotelWeb.Resolvers.AccountsTest do
         "errors" => [_result|_]
       } =json_response(res, 200)
     end
+  @tag :signup
+    test "Sign in returns an error if user is not found in the database", %{conn: conn} do
+
+      assert Repo.aggregate(User, :count, :id) == 0
+
+      variables = %{
+        "input" => %{
+          "sign_in_param" => "username_or_email",
+          "password" => "hash"
+        }
+      }
+
+      query = """
+        mutation($input: SessionInput!){
+          signIn(input: $input){
+            token
+              user{
+                username
+                email
+              }
+          }
+        }
+      """
+
+      res = post(conn, "api/graphiql", query: query, variables: variables)
+
+      %{
+        "errors" => [result | _]
+      } = json_response(res, 200)
+
+      assert "Access Denied" <> _rest = result["message"]
+    end
   end
 end
