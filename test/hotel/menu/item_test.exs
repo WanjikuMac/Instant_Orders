@@ -19,5 +19,16 @@ defmodule Hotel.Menu.ItemTest do
         changeset = Item.changeset(%Item{}, @invalid_item)
         refute changeset.valid?
       end
+      test "associate items to categories" do
+        item = insert(:item)
+        cat = insert(:category)
+        #preload category for item
+        loaded_item =
+        item
+        |> Repo.preload(:categories)
+        changeset = Item.add_to_category(loaded_item, cat)
+        assert changeset.valid?
+        assert changeset.changes.categories
+      end
   end
 end
