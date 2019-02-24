@@ -6,7 +6,8 @@ defmodule Hotel.Menu.Category do
   use Hotel.Utils.Schema
 
   alias Hotel.{
-    Menu.Category
+    Menu.Category,
+    Menu.Item
     }
 
     schema "categories" do
