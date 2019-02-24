@@ -6,7 +6,9 @@ defmodule Hotel.Factory do
   use ExMachina.Ecto, repo: Hotel.Repo
 
   alias Hotel.{
-    Accounts.User
+    Accounts.User,
+    Menu.Item,
+    Menu.Category
     }
 
     def user_factory do
@@ -15,5 +17,18 @@ defmodule Hotel.Factory do
         email: sequence(:email, &"email-#{&1}"),
         password: "password"
       }
+  end
+  def item_factory do
+    %Item{
+      name: sequence(:name, &"name-#{&1}"),
+      description: sequence(:description, &"desc-#{&1}"),
+      price: sequence(:price, &"price-#{&1}")
+    }
+  end
+  def category_factory do
+    %Category{
+      name: sequence(:name, &"name-#{&1}"),
+      description: sequence(:description, &"desc-#{&1}")
+    }
   end
 end
