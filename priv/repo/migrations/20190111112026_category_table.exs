@@ -9,7 +9,7 @@ defmodule Hotel.Repo.Migrations.CategoryTable do
       add :name, :string
       add :description, :string
 
-      timestamps(inserted_at: :added_on, updated_at: :modifieed_on)
+      timestamps(inserted_at: :added_on, updated_at: :modified_on)
     end
   end
 end
