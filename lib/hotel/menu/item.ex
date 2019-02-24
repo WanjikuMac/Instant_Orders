@@ -5,7 +5,9 @@ defmodule Hotel.Menu.Item do
   use Hotel.Utils.Schema
 
     alias Hotel.{
-    Menu.Item
+    Menu.Item,
+    Menu.Category,
+    Repo
       }
     schema "items" do
       field :name, :string
@@ -14,7 +16,7 @@ defmodule Hotel.Menu.Item do
 
       many_to_many(
       :categories, Category, join_through: "item_categories",
-      join_keys: [item_id: :id, tag_id: :id],
+      join_keys: [item_id: :id, category_id: :id],
       on_replace: :delete
       )
 
@@ -30,5 +32,12 @@ defmodule Hotel.Menu.Item do
     |> cast(params, [:name, :description, :price])
     |> validate_required([:name, :price])
     |> validate_length(:description, max: 50)
+  end
+  @spec add_to_category(Item.t(), Category.t()) :: {:ok, Item.t()} | {:error, Ecto.Changeset.t()}
+  def add_to_category(%Item{categories: categories} = item, %Category{} = cat) do
+    item
+    |> Repo.preload(:categories)
+    |> changeset(%{})
+    |> put_assoc(:categories, [cat] ++ categories)
   end
 end
