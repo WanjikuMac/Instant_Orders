@@ -48,9 +48,9 @@ defmodule Hotel.MixProject do
       {:ex_machina, "~> 2.2", only: [:dev, :test]},
       {:bcrypt_elixir, "~> 0.12"},
       {:comeonin, "~> 4.0"},
-      {:guardian, git: "https://github.com/LittleKidogo/guardian.git"},
-      {:distillery, "~> 2.0.12"},
+      {:guardian, "~> 1.2.1"},
       {:credo,"~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:poison, "~> 4.0.1"}
 
     ]
   end
